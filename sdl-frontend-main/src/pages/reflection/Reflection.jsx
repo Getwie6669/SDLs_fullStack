@@ -378,7 +378,7 @@ export default function Reflection() {
 
                 <div className='flex flex-col w-[45vw]'>
                     <div className='flex justify-start gap-6 items-center w-full pl-3'>
-                        <h3 className='text-lg font-bold'>小組日誌</h3>
+                        <h3 className='text-xl font-bold'>小組日誌</h3>
                         <button onClick={() => {
                             setTitle("")
                             setContent("")
