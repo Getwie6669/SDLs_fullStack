@@ -269,7 +269,7 @@ export default function HomePage() {
               </div>
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-3 gap-4 place-items-center'>
                 {ongoingProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((projectItem, index) => (
-                  <div key={index} className='bg-white w-96 rounded-lg shadow-lg hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
+                  <div key={index} className='bg-white w-full rounded-lg shadow-lg hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
                     <h3 className='text-xl font-bold text-[#5BA491]'>{projectItem.name}</h3>
                     <Tooltip children={"活動描述"} content={`${projectItem.describe}`}>
                       <p className='text-gray-600 font-semibold truncate overflow-hidden h-6 '>{projectItem.describe}</p>
@@ -291,7 +291,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <ProgressTooltip children={"活動進度"} content={`已完成${calculateProgressPercentage(projectItem.currentStage, projectItem.currentSubStage)}%`}>
-                      <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
+                      <div className='w-full bg-gray-200 rounded-full h-2.5 '>
                         <div className='bg-[#5BA491] h-2.5 rounded-full transition-all duration-300 ease-in-out' style={{ width: `${calculateProgress(projectItem.currentStage, projectItem.currentSubStage)}%` }}></div>
                       </div>
                     </ProgressTooltip>
@@ -309,7 +309,7 @@ export default function HomePage() {
               {/* <h2 className="text-lg font-bold mb-4 mt-10">已完成</h2> */}
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center'>
                 {completedProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((projectItem, index) => (
-                  <div key={index} className='bg-white w-96 rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
+                  <div key={index} className='bg-white w-full rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
                     <div className='flex items-center'>
                       <h3 className='text-xl font-bold text-[#5BA491]'>{projectItem.name}</h3>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-2 text-[#5BA491]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -330,7 +330,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <ProgressTooltip children={"活動進度"} content={`已完成${calculateProgressPercentage(projectItem.currentStage, projectItem.currentSubStage)}%`}>
-                      <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
+                      <div className='w-full bg-gray-200 rounded-full h-2.5 '>
                         <div className='bg-[#5BA491] h-2.5 rounded-full transition-all duration-300 ease-in-out' style={{ width: `${calculateProgress(projectItem.currentStage, projectItem.currentSubStage)}%` }}></div>
                       </div>
                     </ProgressTooltip>
@@ -347,7 +347,7 @@ export default function HomePage() {
             >
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center'>
                 {doneProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((projectItem, index) => (
-                  <div key={index} className='bg-gray-300 w-96 rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
+                  <div key={index} className='bg-gray-300 w-full rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
                     <div className='flex items-center justify-between'>
                       <div className='flex items-center'>
                         <h3 className='text-xl font-bold text-[#5BA491]'>{projectItem.name}</h3>
@@ -373,7 +373,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <ProgressTooltip children={"活動進度"} content={`已完成${calculateProgressPercentage(projectItem.currentStage, projectItem.currentSubStage)}%`}>
-                      <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
+                      <div className='w-full bg-gray-200 rounded-full h-2.5 '>
                         <div className='bg-[#5BA491] h-2.5 rounded-full transition-all duration-300 ease-in-out' style={{ width: '100%' }}></div>
                       </div>
                     </ProgressTooltip>
@@ -478,7 +478,7 @@ export default function HomePage() {
     return (
       <div className='min-w-full min-h-screen bg-gray-100 overflow-auto scrollbar-hidden'>
         <TopBar />
-        <div className='flex flex-col my-10  md:px-10 lg:px-10 xl:px-60 2xl:px-96 py-10 w-full items-center'>
+        <div class='flex flex-col my-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-20 2xl:px-40 py-10 w-full items-center'>
           <div className='flex flex-col w-full '>
             <Accordion
               index={0}
@@ -501,9 +501,9 @@ export default function HomePage() {
                   <MdAddchart className="mr-2" /> 加入活動
                 </button>
               </div>
-              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  2xl:grid-cols-3 gap-4 place-items-center'>
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-4 place-items-center'>
                 {ongoingProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((projectItem, index) => (
-                  <div key={index} className='bg-white w-96 rounded-lg shadow-lg hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
+                  <div key={index} className='bg-white w-full rounded-lg shadow-lg hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
                     <h3 className='text-xl font-bold text-[#5BA491]'>{projectItem.name}</h3>
                     <Tooltip children={"活動描述"} content={`${projectItem.describe}`}>
                       <p className='text-gray-600 font-semibold truncate overflow-hidden h-6 '>{projectItem.describe}</p>
@@ -525,7 +525,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <ProgressTooltip children={"活動進度"} content={`已完成${calculateProgressPercentage(projectItem.currentStage, projectItem.currentSubStage)}%`}>
-                      <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
+                      <div className='w-full bg-gray-200 rounded-full h-2.5 '>
                         <div className='bg-[#5BA491] h-2.5 rounded-full transition-all duration-300 ease-in-out' style={{ width: `${calculateProgress(projectItem.currentStage, projectItem.currentSubStage)}%` }}></div>
                       </div>
                     </ProgressTooltip>
@@ -543,7 +543,7 @@ export default function HomePage() {
               {/* <h2 className="text-lg font-bold mb-4 mt-10">已完成</h2> */}
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center'>
                 {completedProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((projectItem, index) => (
-                  <div key={index} className='bg-white w-96 rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
+                  <div key={index} className='bg-white w-full rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
                     <div className='flex items-center'>
                       <h3 className='text-xl font-bold text-[#5BA491]'>{projectItem.name}</h3>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-2 text-[#5BA491]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -564,7 +564,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <ProgressTooltip children={"活動進度"} content={`已完成${calculateProgressPercentage(projectItem.currentStage, projectItem.currentSubStage)}%`}>
-                      <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
+                      <div className='w-full bg-gray-200 rounded-full h-2.5 '>
                         <div className='bg-[#5BA491] h-2.5 rounded-full transition-all duration-300 ease-in-out' style={{ width: `${calculateProgress(projectItem.currentStage, projectItem.currentSubStage)}%` }}></div>
                       </div>
                     </ProgressTooltip>
@@ -581,7 +581,7 @@ export default function HomePage() {
             >
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center'>
                 {doneProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((projectItem, index) => (
-                  <div key={index} className='bg-gray-300 w-96 rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
+                  <div key={index} className='bg-gray-300 w-full rounded-lg shadow hover:shadow-lg  p-4 flex flex-col space-y-4 hover:scale-105 transition-transform duration-200 ease-out'>
                     <div className='flex items-center justify-between'>
                       <div className='flex items-center'>
                         <h3 className='text-xl font-bold text-[#5BA491]'>{projectItem.name}</h3>
@@ -607,7 +607,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <ProgressTooltip children={"活動進度"} content={`已完成${calculateProgressPercentage(projectItem.currentStage, projectItem.currentSubStage)}%`}>
-                      <div className='w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700'>
+                      <div className='w-full bg-gray-200 rounded-full h-2.5 '>
                         <div className='bg-[#5BA491] h-2.5 rounded-full transition-all duration-300 ease-in-out' style={{ width: '100%' }}></div>
                       </div>
                     </ProgressTooltip>
