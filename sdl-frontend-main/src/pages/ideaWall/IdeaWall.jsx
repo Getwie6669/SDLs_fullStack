@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getIdeaWall } from '../../api/ideaWall';
 import { getNodes, getNodeRelation } from '../../api/nodes';
-import { socket } from '../../utils/Socket';
+import { socket } from '../../utils/socket';
 import SideBar from '../../components/SideBar';
 import toast, { Toaster } from 'react-hot-toast';
 

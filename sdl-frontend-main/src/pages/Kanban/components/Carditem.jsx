@@ -11,7 +11,7 @@ import { FiEdit } from "react-icons/fi";
 import { AiOutlineTag } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { Draggable } from 'react-beautiful-dnd';
-import { socket } from '../../../utils/Socket';
+import { socket } from '../../../utils/socket';
 import toast, { Toaster } from 'react-hot-toast';
 
 

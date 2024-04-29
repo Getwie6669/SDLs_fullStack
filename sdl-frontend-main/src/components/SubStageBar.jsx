@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/project';
 
-import { socket } from '../utils/Socket';
+import { socket } from '../utils/socket';
 // import { useQuery } from 'react-query';
 import { Context } from '../context/context'
 
