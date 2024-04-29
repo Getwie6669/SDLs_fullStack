@@ -21,14 +21,14 @@ const { rm } = require('fs');
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: "http://140.115.126.45:5173",
         methods: ['GET', 'PUT', 'POST'],
         credentials: true
     },
 });
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "http://140.115.126.45:5173",
     methods: ['GET', 'PUT', 'POST'],
     credentials: true
 }));
