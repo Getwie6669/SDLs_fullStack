@@ -10,7 +10,7 @@ import { FaPlus } from "react-icons/fa";
 import personalDailyIcon from "../../assets/AnimationPersonalDaily.json";
 import teamDailyIcon from "../../assets/AnimationTeamDaily.json";
 import Lottie from "lottie-react";
-import { socket } from '../../utils/Socket';
+import { socket } from '../../utils/socket';
 import FileDownload from 'js-file-download';
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import { GrCircleQuestion } from 'react-icons/gr';

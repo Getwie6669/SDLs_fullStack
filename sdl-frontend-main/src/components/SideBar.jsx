@@ -12,7 +12,7 @@ import { GrCompliance } from "react-icons/gr";
 import { BiTask } from "react-icons/bi";
 import { BsChatDots } from "react-icons/bs";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
-import { socket } from '../utils/Socket';
+// import { socket } from '../utils/Socket';
 import { Context } from '../context/context'
 
 import ChatRoom from './ChatRoom';

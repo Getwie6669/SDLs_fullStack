@@ -8,7 +8,7 @@ import { useParams, Link, useNavigate, useLocation } from 'react-router-dom'
 import { GrFormClose } from "react-icons/gr";
 import Modal from './Modal';
 import Swal from 'sweetalert2';
-import { socket } from '../utils/Socket';
+import { socket } from '../utils/socket'
 import { Context } from '../context/context'
 
 export default function TopBar() {

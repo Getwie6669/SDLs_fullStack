@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { GrFormClose, GrSend } from "react-icons/gr";
 import { useParams } from 'react-router-dom';
-import { socket } from '../utils/Socket';
+import { socket } from '../utils/socket';
 
 export default function ChatRoom({chatRoomOpen, setChatRoomOpen}) {
     const [ currentMessage, setCurrentMessage ] = useState("");

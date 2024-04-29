@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { getSubStage } from '../../api/stage';
 import CommonInput from './components/CommonInput';
 import Loader from '../../components/Loader';
-import { socket } from '../../utils/Socket';
+import { socket } from '../../utils/socket';
 import Swal from 'sweetalert2';
 import { getProject } from '../../api/project';
 import CongratulationsMain_icon from "../../assets/AnimationCongratulationsMain.json";

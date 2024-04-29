@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { getKanbanColumns, getKanbanTasks, addCardItem } from '../../api/kanban';
 import { getSubStage } from '../../api/stage';
-import { socket } from '../../utils/Socket';
+import { socket } from '../../utils/socket';
 
 export default function Kanban() {
   const [kanbanData, setKanbanData] = useState([]);

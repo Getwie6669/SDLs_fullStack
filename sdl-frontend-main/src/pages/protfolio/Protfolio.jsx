@@ -10,7 +10,7 @@ import FolderModal from './components/folderModal';
 import dateFormat from 'dateformat';
 import ProtfoliioIcon from "../../assets/AnimationProtfoliio.json";
 import Lottie from "lottie-react";
-import { socket } from '../../utils/Socket';
+import { socket } from '../../utils/socket';
 
 import { AiOutlineCloudDownload } from "react-icons/ai";
 import FileDownload from 'js-file-download';
