@@ -17,6 +17,11 @@ export const getAllProject = async (config) => {
     return response.data
 }
 
+export const getProjectsByMentor = async (mentorName) => {
+    const response = await projectApi.get(`/mentor/${mentorName}`);
+    return response.data;
+};
+
 export const createProject = async (data) => {
     const response = await projectApi.post("/", data)
     return response.data

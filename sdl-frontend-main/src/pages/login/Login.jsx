@@ -28,6 +28,7 @@ export default function Login() {
         localStorage.setItem("account", res.data.account);
         localStorage.setItem("id", res.data.id);
         localStorage.setItem("username", res.data.username);
+        localStorage.setItem("role", res.data.role);
 
         setUserContext( prev =>{
           return{ ...prev, 
@@ -35,6 +36,7 @@ export default function Login() {
               id : res.data.id,
               accessToken : res.data.accessToken,
               username : res.data.username,
+              role : res.data.role,
           }
         })
         navigate("/homepage")
@@ -69,25 +71,7 @@ export default function Login() {
                   repeat={Infinity}
                   className="mx-auto font-press-start font-semibold text-4xl  mb-20"
                 />
-          {/* <img src='images/login.png' width={'600px'} alt='I am B' /> */}
           <Lottie className="w-96" animationData={Login_icon} />
-          {/* <TypeAnimation
-            className='text-2xl font-press-start mt-2 '
-            sequence={[
-              'self-directed Learning', 
-              2000,
-              'science inquery',
-              2000, 
-              'NCU Wulab',
-              2000,
-            ]}
-            speed={40}
-            wrapper="span"
-            cursor={true}
-            repeat={Infinity}
-            style={{ fontSize: '2em', display: 'inline-block' }}
-            />      */}
-          {/* <h1 className='text-white text-2xl font-press-start mt-2'>self-directed Learning</h1>  */}
         </div>
       </div>
       <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/2 h-screen lg:px-36 xl:px-40 flex items-center justify-center">
@@ -113,7 +97,7 @@ export default function Login() {
             {/* <p className='text-gray-400 bg-white flex items-center justify-center'><hr className="my-6 border-gray-300 w-1/2" />or<hr className="my-6 border-gray-300 w-1/2" /></p>
             <button className=''><button className=''><button className=''>Google</button>FB</button>Apple</button> */}
 
-            <button type="submit" onClick={handleSubmit} style= { {backgroundColor:"#5BA491" } } className="w-full block hover:bg-violet-400 focus:bg-violet-400 text-white font-semibold rounded-lg px-4 py-3 mt-6 text-base">登入</button>
+            <button type="submit" onClick={handleSubmit} style= { {backgroundColor:"#5BA491" } } className="w-full block  text-white font-semibold rounded-lg px-4 py-3 mt-6 text-base">登入</button>
           </form>
           <p className="mt-8 text-gray-400">
             還沒有帳號? 

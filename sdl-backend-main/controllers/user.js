@@ -64,7 +64,8 @@ exports.loginUser = (req, res) => {
                                 {account: account, id:id}, 
                                 "importantsecret"
                         );
-                        res.json({accessToken, account, username, id});
+                        const role =  result[0].role;
+                        res.json({accessToken, account, username, id, role});
                     }else{
                         res.status(404).json({message: 'Wrong account or Password!'});
                         console.log(err);
