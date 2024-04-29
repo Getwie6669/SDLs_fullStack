@@ -3,7 +3,7 @@ services:
   api:
     build:
       context: ./sdl-backend-main
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - 3000:3000
     networks:
@@ -11,7 +11,7 @@ services:
   front:
     build:
       context: ./sdl-frontend-main
-      dockerfile: Dockerfile
+      dockerfile: dockerfile
     ports:
       - 5173:5173
     networks:
