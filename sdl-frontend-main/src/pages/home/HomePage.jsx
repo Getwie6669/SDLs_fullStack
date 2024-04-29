@@ -478,7 +478,7 @@ export default function HomePage() {
     return (
       <div className='min-w-full min-h-screen bg-gray-100 overflow-auto scrollbar-hidden'>
         <TopBar />
-        <div className='flex flex-col my-10  md:px-10 lg:px-10 2xl:px-80 py-10 w-full items-center'>
+        <div className='flex flex-col my-10  md:px-10 lg:px-10 xl:px-60 2xl:px-96 py-10 w-full items-center'>
           <div className='flex flex-col w-full '>
             <Accordion
               index={0}
