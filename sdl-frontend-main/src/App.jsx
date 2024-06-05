@@ -12,7 +12,7 @@ import ProjectLayout from "./layouts/ProjectLayout";
 import Bulletin from "./pages/bulletin/Bulletin";
 import List from "./pages/list/List";
 import SubmitTask from "./pages/submit/SubmitTask";
-import ManagePhase from "./pages/managePhase/ManagePhase";
+import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Reflection from "./pages/reflection/Reflection";
 import Protfolio from './pages/protfolio/Protfolio';
 import ManageIdeaWall from "./pages/manageIdeaWall/ManageIdeaWall";
@@ -35,7 +35,7 @@ export default function App() {
           <Route path="project/:projectId" element={<ProjectLayout />}>
             <Route path="kanban" element={<Kanban />} />
             <Route path="submitTask" element={<SubmitTask />} />
-            <Route path="managePhase" element={<ManagePhase />} />
+            <Route path="askQuestion" element={<AskQuestion />} />
             <Route path="reflection" element={<Reflection />} />
             <Route path="protfolio" element={<Protfolio />} />
             <Route path="manageIdeaWall" element={<ManageIdeaWall />} />

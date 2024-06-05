@@ -6,6 +6,7 @@ const Threads_Message = require('./threads_message');
 const daily_personal = require('./daily_personal');
 const daily_team = require('./daily_team');
 const Chatroom_message = require('./chatroom_message');
+const Question = require('./question');
 
 const User = sequelize.define('user', {
     username: {
@@ -35,5 +36,6 @@ User.hasMany(Threads);
 // User.hasMany(Chatroom_message);
 User.hasMany(daily_personal);
 User.hasMany(daily_team);
+User.hasMany(Question);
 
 module.exports = User;

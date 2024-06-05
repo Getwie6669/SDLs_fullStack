@@ -8,9 +8,11 @@ import { TiFolderOpen } from "react-icons/ti";
 import { AiOutlineProject } from "react-icons/ai";
 import { CgNotes, CgFolder } from "react-icons/cg";
 import { BsBezier2, BsChatText, BsJournalText, BsFolder } from "react-icons/bs";
+import { LuLayoutDashboard } from "react-icons/lu";
 import { GrCompliance } from "react-icons/gr";
 import { BiTask } from "react-icons/bi";
 import { BsChatDots } from "react-icons/bs";
+import { TbMessageQuestion } from "react-icons/tb";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 // import { socket } from '../utils/Socket';
 import { Context } from '../context/context'
@@ -105,14 +107,21 @@ export default function SideBar() {
     const [chatRoomOpen, setChatRoomOpen] = useState(false);
     const { projectId } = useParams();
     const { currentStageIndex, setCurrentStageIndex, currentSubStageIndex, setCurrentSubStageIndex } = useContext(Context)
+    const role = localStorage.getItem("role"); // Get user role from localStorage
+
     const menus = [
         { name: "進度看板", link: `/project/${projectId}/kanban`, icon: MdOutlineViewKanban },
         { name: "想法延伸", link: `/project/${projectId}/ideaWall`, icon: FaRegLightbulb },
-        // { name: "管理階段", link: `/project/${projectId}/managePhase`, icon: BsBezier2 },
         { name: "反思日誌", link: `/project/${projectId}/reflection`, icon: CgNotes },
         { name: "歷程檔案", link: `/project/${projectId}/protfolio`, icon: TiFolderOpen },
-        { name: "成果紀錄", link: `/project/${projectId}/submitTask`, icon: BiTask }
-    ]
+        { name: "成果紀錄", link: `/project/${projectId}/submitTask`, icon: BiTask },
+        { name: "提問專區", link: `/project/${projectId}/askQuestion`, icon: TbMessageQuestion }
+    ];
+
+    if (role === "teacher") {
+        menus.push({ name: "學習儀錶板", link: `/project/${projectId}/manageIdeaWall`, icon: LuLayoutDashboard });
+    }
+
     const [stageInfo, setStageInfo] = useState({ name: "", description: "" });
     const currentStage = localStorage.getItem("currentStage");
     const currentSubStage = localStorage.getItem("currentSubStage");

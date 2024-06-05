@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
@@ -9,17 +9,17 @@ import Login_icon from "../../assets/Animation-login.json";
 import Lottie from "lottie-react";
 
 export default function Register() {
-    const [userData, setUserData] = useState({role:"student"});
+    const [userData, setUserData] = useState({ role: "student" });
     const [userContext, setUserContext] = useContext(AuthContext);
-    const [ error, setError ] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
     const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
-    const handleChange = e =>{
+    const handleChange = e => {
         const { name, value } = e.target
-        setUserData( prev => ({
+        setUserData(prev => ({
             ...prev,
-            [name]:value
+            [name]: value
         }));
     }
 
@@ -33,39 +33,40 @@ export default function Register() {
     //     }
     // };
     const validateInput = () => {
-        if (isFormSubmitted) {
-            if (!userData.account || userData.account.length < 6 || userData.account.length > 20) {
-                setError("帳號長度應為6-20個字符");
-                return false;
-            }
-            if (!/^[A-Za-z0-9]+$/.test(userData.account)) {
-                setError("帳號只能包含字母、數字");
-                return false;
-            }
-            if (!/^[A-Za-z]/.test(userData.account)) {
-                setError("帳號必須以字母開頭");
-                return false;
-            }
-            if (!userData.password || userData.password.length < 8) {
-                setError("密碼長度至少為8個字符");
-                return false;
-            }
-            if (!/\d/.test(userData.password) || !/[A-Z]/i.test(userData.password) || !/[^A-Za-z0-9]/.test(userData.password)) {
-                setError("密碼必須包含字母、數字及特殊字符");
-                return false;
-            }
-            if (!userData.confirmPassword) {
-                setError("請確認密碼");
-                return false;
-            } else if (userData.confirmPassword !== userData.password) {
-                setError("密碼不相符");
-                return false;
-            }
+        // if (isFormSubmitted) {
+        if (!userData.account || userData.account.length < 6 || userData.account.length > 20) {
+            setError("帳號長度應為6-20個字符");
+            return false;
         }
-        setError(""); 
-        return true; 
+        if (!/^[A-Za-z0-9]+$/.test(userData.account)) {
+            setError("帳號只能包含字母、數字");
+            return false;
+        }
+        if (!/^[A-Za-z]/.test(userData.account)) {
+            setError("帳號必須以字母開頭");
+            return false;
+        }
+
+        if (!userData.confirmPassword) {
+            setError("請確認密碼");
+            return false;
+        } else if (userData.confirmPassword !== userData.password) {
+            setError("密碼不相符");
+            return false;
+        } else if (!userData.password || userData.password.length < 8) {
+            setError("密碼長度至少為8個字符");
+            return false;
+        } else if (!/\d/.test(userData.password) || !/[A-Z]/i.test(userData.password) || !/[^A-Za-z0-9]/.test(userData.password)) {
+            setError("密碼必須包含字母、數字及特殊字符");
+            return false;
+        } else {
+            setError("");
+            return true;
+        }
+        // }
+
     };
-    
+
 
     const userRegisterMutation = useMutation(userRegister, {
         onSuccess: (res) => {
@@ -120,76 +121,76 @@ export default function Register() {
         }
     });
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e) => {
         e.preventDefault()
-        setIsFormSubmitted(true);
+        // setIsFormSubmitted(true);
         const isValid = validateInput(); // 获取验证结果
         if (isValid) {
             userRegisterMutation.mutate(userData);
         }
     };
-    
+
     return (
         <section className="flex flex-col md:flex-row h-screen items-center">
             <div className="hidden bg-white w-full md:w-1/2 xl:w-1/2 h-screen md:flex md:items-center md:justify-center">
-            <div className='flex flex-col items-center justify-center h-full'>
-                {/* <h1 className='mx-auto  text-7xl mb-2'>自主學習</h1> */}
-                <TypeAnimation
-                  sequence={[
-                    "自主學習 Self-directed Learning",
-                    3000,
-                    "學習歷程 Learning Portfolio",
-                    3000,
-                  ]}
-                  speed={50}
-                  wrapper="span"
-                  cursor={true}
-                  repeat={Infinity}
-                  className="mx-auto font-press-start font-semibold text-4xl  mb-20"
-                />
-                {/* <img src='images/login.png' width={'600px'} alt='I am B' /> */}
-                <Lottie className="w-96" animationData={Login_icon} />
+                <div className='flex flex-col items-center justify-center h-full'>
+                    {/* <h1 className='mx-auto  text-7xl mb-2'>自主學習</h1> */}
+                    <TypeAnimation
+                        sequence={[
+                            "自主學習 Self-directed Learning",
+                            3000,
+                            "學習歷程 Learning Portfolio",
+                            3000,
+                        ]}
+                        speed={50}
+                        wrapper="span"
+                        cursor={true}
+                        repeat={Infinity}
+                        className="mx-auto font-press-start font-semibold text-4xl  mb-20"
+                    />
+                    {/* <img src='images/login.png' width={'600px'} alt='I am B' /> */}
+                    <Lottie className="w-96" animationData={Login_icon} />
 
                 </div>
             </div>
-        <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/2 h-screen px-6 lg:px-16 xl:px-40 flex items-center justify-center">
-            <div className="bg-white w-full h-100 rounded-lg p-8 shadow-2xl">
-                <h1 className="text-4xl font-bold mb-6 flex items-center justify-center">Sign up</h1>
-                <form className="mt-6">
-                <div>
-                    <label className="block text-gray-700 text-base">名稱</label>
-                    <input type="text" name="username" placeholder="請輸入名稱" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
+            <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/2 h-screen px-6 lg:px-16 xl:px-40 flex items-center justify-center">
+                <div className="bg-white w-full h-100 rounded-lg p-8 shadow-2xl">
+                    <h1 className="text-4xl font-bold mb-6 flex items-center justify-center">Sign up</h1>
+                    <form className="mt-6">
+                        <div>
+                            <label className="block text-gray-700 text-base">名稱</label>
+                            <input type="text" name="username" placeholder="請輸入名稱" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 text-base">帳號</label>
+                            <input type="text" name="account" placeholder="請輸入帳號" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 text-base">密碼</label>
+                            <input type="password" name="password" placeholder="請輸入密碼" minLength="6" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
+                        </div>
+                        <div>
+                            <label className="block text-gray-700 text-base">確認密碼</label>
+                            <input type="password" name="confirmPassword" placeholder="請輸入確認密碼" minLength="6" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
+                            {error && <span className=' text-xs text-red-600'>{error}</span>}
+                        </div>
+                        <div className="mt-4">
+                            <label className="block text-gray-700 text-base">職位</label>
+                            <select name="role" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
+                                <option value="student">學生</option>
+                                <option value="teacher">教師</option>
+                            </select>
+                        </div>
+                        <button type="submit" onClick={handleSubmit} style={{ backgroundColor: "#5BA491" }} className="w-full block hover:bg-violet-400 focus:bg-violet-400 text-white font-semibold rounded-lg px-4 py-3 mt-6 text-base">註冊</button>
+                    </form>
+                    <p className="mt-8">
+                        已經有帳號了?
+                        <span style={{ color: "#5BA491" }} className="text-blue-500 hover:text-blue-700 font-semibold ml-2">
+                            <Link to="/">Sign in</Link>
+                        </span>
+                    </p>
                 </div>
-                <div>
-                    <label className="block text-gray-700 text-base">帳號</label>
-                    <input type="text" name="account" placeholder="請輸入帳號" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
-                </div>
-                <div>
-                    <label className="block text-gray-700 text-base">密碼</label>
-                    <input type="password" name="password" placeholder="請輸入密碼" minLength="6" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
-                </div>
-                <div>
-                    <label className="block text-gray-700 text-base">確認密碼</label>
-                    <input type="password" name="confirmPassword" placeholder="請輸入確認密碼" minLength="6" onChange={handleChange} onBlur={validateInput} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-green-700 focus:bg-white focus:outline-none" autoFocus required />
-                    {error && <span className=' text-xs text-red-600'>{error}</span>}
-                </div>
-                <div className="mt-4">
-                    <label className="block text-gray-700 text-base">職位</label>
-                    <select name="role" onChange={handleChange} className=" text-base w-full px-4 py-3 rounded-lg bg-white mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
-                        <option value="student">學生</option>
-                        <option value="teacher">教師</option>
-                    </select>
-                </div>
-                <button type="submit" onClick={handleSubmit} style= { {backgroundColor:"#5BA491" } }  className="w-full block hover:bg-violet-400 focus:bg-violet-400 text-white font-semibold rounded-lg px-4 py-3 mt-6 text-base">註冊</button>
-                </form>
-                <p className="mt-8">
-                已經有帳號了? 
-                <span style= { {color:"#5BA491" } } className="text-blue-500 hover:text-blue-700 font-semibold ml-2">
-                    <Link to="/">Sign in</Link> 
-                </span>
-                </p>
             </div>
-        </div>
-    </section>
+        </section>
     )
 }

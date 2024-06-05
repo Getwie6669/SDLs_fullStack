@@ -12,7 +12,9 @@ import { getNodes, getNodeRelation } from '../../api/nodes';
 import { socket } from '../../utils/socket';
 import SideBar from '../../components/SideBar';
 import toast, { Toaster } from 'react-hot-toast';
-
+import Lottie from "lottie-react";
+import Adding_icon from "../../assets/AnimationAddingNode.json";
+import Timer from './components/Timer';
 
 export default function IdeaWall() {
     const container = useRef(null);
@@ -31,13 +33,14 @@ export default function IdeaWall() {
     const [buildOnNodeId, setBuildOnId] = useState("")
     const [tempid, setTempId] = useState("")
     const [projectUsers, setProjectUsers] = useState([{ id: "", username: "" }]);
+    const [hovering, setHovering] = useState(false);
 
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const userId = localStorage.getItem("id");
     const colors = [
-        "#5BA491", "#26547C", "#F25757", "#AF7A6D", "#183446", "#9395D3","#FF6542","#78290F","#DEA47E","#9DACFF","#2F3061", "#FFD166"
-      ];
+        "#5BA491", "#26547C", "#F25757", "#AF7A6D", "#183446", "#9395D3", "#FF6542", "#78290F", "#DEA47E", "#9DACFF", "#2F3061", "#FFD166"
+    ];
 
     const ideaWallInfoQuery = useQuery(
         'ideaWallInfo',
@@ -77,15 +80,15 @@ export default function IdeaWall() {
     useEffect(() => {
         const temp = [];
         nodes.map((item) => {
-          const nodeColor = colors[item.colorindex-1 % colors.length]; // Use modulo to cycle through colors if index exceeds array length
-    
-          item.image = svgConvertUrl(item.title,item.owner,item.createdAt,nodeColor );
-    
-    
-          item.shape = "image";
-          temp.push(item);
+            const nodeColor = colors[item.colorindex - 1 % colors.length]; // Use modulo to cycle through colors if index exceeds array length
+
+            item.image = svgConvertUrl(item.title, item.owner, item.createdAt, nodeColor);
+
+
+            item.shape = "image";
+            temp.push(item);
         });
-      }, [nodes]);
+    }, [nodes]);
 
     // socket
     useEffect(() => {
@@ -157,36 +160,36 @@ export default function IdeaWall() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         if (name === "title") {
-          setTitle(value);
+            setTitle(value);
         } else if (name === "content") {
-          setContent(value);
+            setContent(value);
         }
-    
-    
+
+
         setNodeData((prevData) => ({
-          ...prevData,
-          [name]: value,
-          ideaWallId: ideaWallInfo.id,
-          owner: localStorage.getItem("username"),
-          from_id: buildOnNodeId,
-          projectId:projectId,
-          colorindex:userId
+            ...prevData,
+            [name]: value,
+            ideaWallId: ideaWallInfo.id,
+            owner: localStorage.getItem("username"),
+            from_id: buildOnNodeId,
+            projectId: projectId,
+            colorindex: userId
         }));
-      };
+    };
 
     const handleUpdataChange = (e) => {
         const { name, value } = e.target;
         setSelectNodeInfo((prevData) => ({
-          ...prevData,
-          [name]: value,
-          ideaWallId: ideaWallInfo.id,
-          owner: localStorage.getItem("username"),
-          projectId:projectId,
-          colorindex:userId
+            ...prevData,
+            [name]: value,
+            ideaWallId: ideaWallInfo.id,
+            owner: localStorage.getItem("username"),
+            projectId: projectId,
+            colorindex: userId
         }));
-      };
+    };
 
     const handleCreateSubmit = (e) => {
         e.preventDefault()
@@ -215,6 +218,13 @@ export default function IdeaWall() {
 
     }
 
+    const handleMouseEnter = () => {
+        setHovering(true);
+    };
+
+    const handleMouseLeave = () => {
+        setHovering(false);
+    };
 
     return (
         <div>
@@ -229,7 +239,7 @@ export default function IdeaWall() {
                         setCreateOptionModalOpen(false)
                         setCreateNodeModalOpen(true)
                     }} className='w-full h-full p-2 rounded-md bg-white hover:bg-slate-100 text-sm'>
-                        建立便利貼
+                        建立想法
                     </button>
                     <button onClick={() => setCreateOptionModalOpen(false)} className='w-full h-full p-2 rounded-md bg-white hover:bg-slate-100 text-sm'>
                         取消
@@ -336,6 +346,27 @@ export default function IdeaWall() {
                     }
                 </Modal>
             }
+            <Timer />
+            <button
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => {
+                    setNodeData({});  // 重置 nodeData 状态
+                    setTitle("");
+                    setContent("");
+                    setCreateOptionModalOpen(false);
+                    setCreateNodeModalOpen(true);
+                }}
+                aria-label="新增節點"
+                className={`fixed bottom-5 right-5 flex items-center justify-center text-2xl transition duration-300 ${hovering ?"scale-110" : "scale-100" } `}
+            >
+                <Lottie
+                    className="w-28"
+                    animationData={Adding_icon}
+                    loop={false}
+                    autoplay={false}
+                />
+            </button>
             <Toaster />
         </div>
     )

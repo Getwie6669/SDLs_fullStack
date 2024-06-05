@@ -8,6 +8,7 @@ const Daily_team = require('./daily_team');
 const Chatroom_message = require('./chatroom_message');
 const Kanban = require('./kanban');
 const Submit = require('./submit');
+const Question = require('./question');
 
 const Project = sequelize.define('project', {
     name: {
@@ -39,6 +40,8 @@ const Project = sequelize.define('project', {
         allowNull: true,
         defaultValue: false  // 假設默認值為 false，意味著項目尚未完成
     }
+},{
+    timestamps: true  
 });
 
 // Project.hasMany(Chatroom_message);
@@ -49,5 +52,7 @@ Project.hasMany(Daily_personal);
 Project.hasMany(Daily_team);
 Project.hasOne(Kanban);
 Project.hasMany(Submit);
+Project.hasMany(Question);
+
 
 module.exports = Project;

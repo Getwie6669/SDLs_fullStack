@@ -4,7 +4,8 @@ const sequelize = require('./util/database');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const { Op } = require('sequelize');
-
+const Sequelize = require('sequelize');
+// const moment = require('moment-timezone');
 const app = express();
 const http = require('http');
 const { Server } = require('socket.io');
@@ -16,20 +17,22 @@ const Kanban = require('./models/kanban');
 const Node = require('./models/node');
 const Node_relation = require('./models/node_relation');
 const Chatroom_message = require('./models/chatroom_message');
+const Project = require('./models/project')
+const QuestionMessage = require('./models/question_message')
 
 const { rm } = require('fs');
 
 const io = new Server(server, {
     cors: {
         origin: "http://localhost:5173",
-        methods: ['GET', 'PUT', 'POST'],
+        methods: ['GET', 'PUT', 'POST', 'DELETE'],
         credentials: true
     },
 });
 
 app.use(cors({
     origin: "http://localhost:5173",
-    methods: ['GET', 'PUT', 'POST'],
+    methods: ['GET', 'PUT', 'POST', 'DELETE'],
     credentials: true
 }));
 app.use(bodyParser.json());
@@ -42,6 +45,11 @@ io.on("connection", (socket) => {
         socket.join(data);
         console.log(`${socket.id} join room ${data}`);
     })
+    //join QuestionRoom
+    socket.on("join_QuestionRoom", (roomId) => {
+        socket.join(roomId);
+        console.log(`Socket ${socket.id} joined room ${roomId}`);
+    });
     //join project
     socket.on("join_project", (data) => {
         socket.join(data);
@@ -55,19 +63,37 @@ io.on("connection", (socket) => {
             await Chatroom_message.create({
                 message: data.message,
                 author: data.author,
-                userId: data.creator, // 假设 data.author 存储的是用户 ID
-                projectId: data.room // 假设 data.room 存储的是项目 ID
+                userId: data.creator,
+                projectId: data.room
             });
         } catch (error) {
             console.error("保存消息时出错：", error);
         }
         socket.to(data.room).emit("receive_message", data);
     });
+    // send QuestionMessage
+    socket.on("send_QuestionMessage", async (data) => {
+        console.log("Question Message Received:", data);
+        try {
+            // 存储消息到数据库
+            await QuestionMessage.create({
+                message: data.message,
+                author: data.author,
+                questionId: data.questionId
+            });
+            // 发送消息到同一聊天室的其他用户
+
+        } catch (error) {
+            console.error("保存提问消息时出错：", error);
+        }
+        socket.to(data.questionId).emit("receive_QuestionMessage", data);
+    });
     //create card
     socket.on("taskItemCreated", async (data) => {
         try {
             const { selectedcolumn, item, kanbanData, projectId } = data;
             const { title, content, labels, assignees } = item;
+            // const now = moment().tz("Asia/Taipei").format("YYYY-MM-DD HH:mm:ss.SSS ZZ");
             const creatTask = await Task.create({
                 title: title,
                 content: content,
@@ -80,6 +106,15 @@ io.on("connection", (socket) => {
             await addIntoTaskArray.save()
                 .then(() => console.log("success"))
             // io.sockets.emit("taskItems", addIntoTaskArray);
+            // console.log("now",now)
+            // console.log("projectId",projectId)
+            await Project.update({
+                id: projectId
+            }, {
+                where: {
+                    id: projectId
+                }
+            });
             io.to(projectId).emit("taskItems", addIntoTaskArray);
         } catch (error) {
             console.error("处理 taskItemCreated 时出错：", error);
@@ -91,6 +126,13 @@ io.on("connection", (socket) => {
         const updateTask = await Task.update(cardData, {
             where: {
                 id: cardData.id
+            }
+        });
+        await Project.update({
+            id: projectId
+        }, {
+            where: {
+                id: projectId
             }
         });
         // io.sockets.emit("taskItem", updateTask);
@@ -122,7 +164,13 @@ io.on("connection", (socket) => {
                         id: cardData.id
                     }
                 });
-
+                await Project.update({
+                    id: projectId
+                }, {
+                    where: {
+                        id: projectId
+                    }
+                });
                 // Emit the updated task information to all clients
                 // io.sockets.emit("taskItem", updateTask);
                 io.to(projectId).emit("taskItem", updateTask);
@@ -153,6 +201,13 @@ io.on("connection", (socket) => {
 
         const sourceColumn = kanbanData[source.droppableId].task.map(item => item.id);
         const destinationColumn = kanbanData[destination.droppableId].task.map(item => item.id);
+        await Project.update({
+            id: projectId
+        }, {
+            where: {
+                id: projectId
+            }
+        });
         await Column.update({ task: sourceColumn }, {
             where: {
                 id: kanbanData[source.droppableId].id
@@ -184,6 +239,13 @@ io.on("connection", (socket) => {
             await addIntoColumnArray.save()
                 .then(() => console.log("success"))
             // io.sockets.emit("ColumnCreatedSuccess", addIntoColumnArray);
+            await Project.update({
+                id: projectId
+            }, {
+                where: {
+                    id: projectId
+                }
+            });
             io.to(projectId).emit("ColumnCreatedSuccess", addIntoColumnArray);
 
         } catch (error) {
@@ -208,6 +270,13 @@ io.on("connection", (socket) => {
         // 更新Kanban表中的columns字段
         try {
             await Kanban.update({ column: columnIds }, {
+                where: {
+                    id: kanbanId
+                }
+            });
+            await Project.update({
+                id: kanbanId
+            }, {
                 where: {
                     id: kanbanId
                 }
@@ -260,7 +329,13 @@ io.on("connection", (socket) => {
                         id: columnData.id
                     }
                 });
-
+                await Project.update({
+                    id: kanbanId
+                }, {
+                    where: {
+                        id: kanbanId
+                    }
+                });
                 // Emit the updated kanban and column info to all clients
                 // io.sockets.emit("columnDeleted", { kanbanId, updatedColumns, deletedColumnId: columnData.id });
                 io.to(kanbanId).emit("columnDeleted", { kanbanId, updatedColumns, deletedColumnId: columnData.id });
@@ -300,6 +375,13 @@ io.on("connection", (socket) => {
                 ideaWallId: ideaWallId
             })
         }
+        await Project.update({
+            id: projectId
+        }, {
+            where: {
+                id: projectId
+            }
+        });
         // io.sockets.emit("nodeUpdated", createdNode);
         io.to(projectId).emit("nodeUpdated", createdNode);
 
@@ -318,6 +400,13 @@ io.on("connection", (socket) => {
                 }
             }
         );
+        await Project.update({
+            id: projectId
+        }, {
+            where: {
+                id: projectId
+            }
+        });
         // io.sockets.emit("nodeUpdated", createdNode);
         io.to(projectId).emit("nodeUpdated", createdNode);
 
@@ -332,6 +421,13 @@ io.on("connection", (socket) => {
                 }
             }
         );
+        await Project.update({
+            id: projectId
+        }, {
+            where: {
+                id: projectId
+            }
+        });
         io.sockets.emit("nodeUpdated", deleteNode);
         // io.to(projectId).emit("nodeUpdated", deleteNode);
 
@@ -353,6 +449,7 @@ app.use('/daily', require('./routes/daily'))
 app.use('/submit', require('./routes/submit'))
 app.use('/stage', require('./routes/stage'))
 app.use('/chatroom', require('./routes/chatroom'))
+app.use('/question', require('./routes/question'))
 
 //error handling
 app.use((error, req, res, next) => {
@@ -366,7 +463,7 @@ app.use((error, req, res, next) => {
 sequelize.sync({ alter: true })  //{force:true} {alter:true}
     .then(result => {
         console.log("Database connected");
-        
+
     })
     .catch(err => console.log(err));
 

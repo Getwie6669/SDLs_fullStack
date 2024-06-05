@@ -218,6 +218,11 @@ export default function Kanban() {
           columnData,
           kanbanId: projectId
         });
+        Swal.fire(
+          '已刪除！',
+          '看板列表已被刪除。',
+          'success'
+      );
       }
     });
   }
